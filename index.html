@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FSL 2025/2026 — Madrid & Maristaer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── TOKENS ─── */
+    :root {
+      --bg:       #0C0C0C;
+      --surface:  #141414;
+      --border:   #252525;
+      --text:     #E8E4DE;
+      --muted:    #7A746C;
+      --accent:   #C8913A;
+      --accent2:  #8FB8C4;   /* steel-blue for Maristaer/navy section */
+      --white:    #F5F1EC;
+    }
+
+    /* ─── RESET ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 17px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ─── UTILITY ─── */
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .eyebrow.navy { color: var(--accent2); }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 40px;
+      background: rgba(12,12,12,.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      color: var(--white);
+      letter-spacing: .02em;
+    }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: .04em;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      height: 100svh;
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 0 72px 0;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('img/toledo_ponte.jpg');
+      background-size: cover;
+      background-position: center 30%;
+      filter: brightness(.42);
+      transform: scale(1.04);
+      transition: transform 8s ease;
+    }
+    .hero:hover .hero-bg { transform: scale(1.00); }
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(12,12,12,1) 0%, rgba(12,12,12,.3) 55%, rgba(12,12,12,0) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      padding: 0 72px;
+      max-width: 960px;
+    }
+    .hero-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(48px, 8vw, 96px);
+      font-weight: 900;
+      line-height: .95;
+      color: var(--white);
+      margin-bottom: 28px;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-sub {
+      font-size: 17px;
+      font-weight: 300;
+      color: rgba(232,228,222,.7);
+      max-width: 560px;
+      line-height: 1.6;
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 36px;
+      right: 72px;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .hero-scroll::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 52px;
+      background: linear-gradient(to bottom, var(--muted), transparent);
+      animation: scrollLine 1.8s ease infinite;
+    }
+    @keyframes scrollLine {
+      0%   { transform: scaleY(0); transform-origin: top; }
+      50%  { transform: scaleY(1); transform-origin: top; }
+      51%  { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* ─── INTRO STRIP ─── */
+    .intro-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .stat {
+      padding: 40px 48px;
+      border-right: 1px solid var(--border);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: .04em;
+    }
+
+    /* ─── SECTION WRAPPER ─── */
+    .section {
+      padding: 100px 72px;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    .section-header {
+      margin-bottom: 64px;
+    }
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.1;
+      margin-top: 12px;
+    }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0 72px;
+    }
+
+    /* ─── MADRID INTRO ─── */
+    .madrid-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .madrid-intro p {
+      font-size: 18px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: rgba(232,228,222,.85);
+    }
+    .madrid-intro p + p { margin-top: 20px; }
+    .quote-block {
+      border-left: 2px solid var(--accent);
+      padding: 24px 32px;
+      background: var(--surface);
+    }
+    .quote-block blockquote {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-style: italic;
+      color: var(--white);
+      line-height: 1.45;
+    }
+    .quote-block cite {
+      display: block;
+      margin-top: 16px;
+      font-size: 12px;
+      font-style: normal;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    /* ─── PHOTO GRID ─── */
+    .photo-grid {
+      display: grid;
+      gap: 3px;
+      margin: 64px 0;
+    }
+    .photo-grid.two-col { grid-template-columns: 1fr 1fr; }
+    .photo-grid.three-col { grid-template-columns: 2fr 1fr 1fr; }
+    .photo-grid.asymmetric { grid-template-columns: 1fr 1.6fr; }
+
+    .photo-card {
+      position: relative;
+      overflow: hidden;
+    }
+    .photo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .5s cubic-bezier(.25,.46,.45,.94);
+    }
+    .photo-card:hover img { transform: scale(1.04); }
+    .photo-card.tall { aspect-ratio: 3/4; }
+    .photo-card.wide { aspect-ratio: 4/3; }
+    .photo-card.square { aspect-ratio: 1; }
+    .photo-card.portrait { aspect-ratio: 2/3; }
+    .photo-card .caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,.72));
+      padding: 40px 20px 16px;
+      font-size: 12px;
+      color: rgba(245,241,236,.7);
+      letter-spacing: .04em;
+      transform: translateY(100%);
+      transition: transform .3s ease;
+    }
+    .photo-card:hover .caption { transform: translateY(0); }
+
+    /* ─── PLACES LIST ─── */
+    .places-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      margin-top: 48px;
+    }
+    .place-item {
+      background: var(--bg);
+      padding: 36px 32px;
+      transition: background .2s;
+    }
+    .place-item:hover { background: var(--surface); }
+    .place-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 13px;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .place-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .place-desc { font-size: 14px; color: var(--muted); line-height: 1.5; }
+
+    /* ─── TOLEDO FEATURE ─── */
+    .toledo-feature {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 3px;
+      margin: 64px 0;
+    }
+    .toledo-text {
+      background: var(--surface);
+      padding: 64px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .toledo-text h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      color: var(--white);
+      margin: 12px 0 24px;
+      line-height: 1.2;
+    }
+    .toledo-text p {
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(232,228,222,.8);
+      line-height: 1.75;
+    }
+    .toledo-text p + p { margin-top: 16px; }
+    .toledo-imgs {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: 3px;
+    }
+    .toledo-imgs .photo-card { aspect-ratio: unset; }
+
+    /* ─── INDEPENDENCE SECTION ─── */
+    .independence {
+      background: var(--surface);
+      padding: 80px 72px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      margin: 0;
+      max-width: 100%;
+    }
+    .independence h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 4vw, 52px);
+      color: var(--white);
+      margin: 12px 0 24px;
+    }
+    .independence p {
+      font-size: 17px;
+      font-weight: 300;
+      color: rgba(232,228,222,.8);
+      line-height: 1.75;
+    }
+    .independence p + p { margin-top: 16px; }
+    .independence-img {
+      position: relative;
+    }
+    .independence-img img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      display: block;
+    }
+    .independence-img::before {
+      content: '';
+      position: absolute;
+      top: -16px; left: -16px;
+      right: 16px; bottom: 16px;
+      border: 1px solid var(--accent);
+      z-index: -1;
+    }
+
+    /* ─── FUNDACION ─── */
+    .fundacion-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+      margin: 64px 0 0;
+    }
+    .fundacion-row .photo-card { aspect-ratio: 4/3; }
+
+    /* ─── MARISTAER SECTION ─── */
+    .maristaer-section {
+      background: #090E12;
+      border-top: 1px solid #1A2830;
+    }
+    .maristaer-section .eyebrow { color: var(--accent2); }
+    .maristaer-section h2 { color: var(--white); }
+
+    .maristaer-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .maristaer-intro p {
+      font-size: 18px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: rgba(232,228,222,.8);
+    }
+    .maristaer-intro p + p { margin-top: 20px; }
+
+    .info-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: #1A2830;
+      margin-top: 56px;
+    }
+    .info-card {
+      background: #090E12;
+      padding: 36px 32px;
+      border-left: 2px solid transparent;
+      transition: border-color .2s, background .2s;
+    }
+    .info-card:hover {
+      border-left-color: var(--accent2);
+      background: #0D1720;
+    }
+    .info-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+    .info-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+    .info-icon {
+      width: 32px; height: 32px;
+      margin-bottom: 16px;
+      color: var(--accent2);
+    }
+
+    /* ─── FINAL THOUGHTS ─── */
+    .final {
+      text-align: center;
+      padding: 120px 72px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .final h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.1;
+      margin: 16px 0 32px;
+    }
+    .final h2 em { font-style: italic; color: var(--accent); }
+    .final p {
+      font-size: 19px;
+      font-weight: 300;
+      color: rgba(232,228,222,.75);
+      line-height: 1.75;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .final-divider {
+      width: 48px;
+      height: 2px;
+      background: var(--accent);
+      margin: 48px auto 0;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer p { font-size: 12px; color: var(--muted); }
+
+    /* ─── FADE IN ON SCROLL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .hero-content { padding: 0 28px; }
+      .hero-scroll { right: 28px; }
+      .intro-strip { grid-template-columns: 1fr; }
+      .stat { border-right: none; border-bottom: 1px solid var(--border); }
+      .section { padding: 64px 28px; }
+      .divider { margin: 0 28px; }
+      .madrid-intro { grid-template-columns: 1fr; gap: 40px; }
+      .places-grid { grid-template-columns: 1fr 1fr; }
+      .photo-grid.three-col { grid-template-columns: 1fr 1fr; }
+      .toledo-feature { grid-template-columns: 1fr; }
+      .independence { grid-template-columns: 1fr; padding: 64px 28px; }
+      .independence-img::before { display: none; }
+      .maristaer-intro { grid-template-columns: 1fr; gap: 40px; }
+      .info-cards { grid-template-columns: 1fr; }
+      .final { padding: 80px 28px; }
+      footer { flex-direction: column; gap: 8px; text-align: center; padding: 24px 28px; }
+      .fundacion-row { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <span class="nav-brand">FSL 2025 / 2026</span>
+    <ul class="nav-links">
+      <li><a href="#madrid">Madrid</a></li>
+      <li><a href="#toledo">Toledo</a></li>
+      <li><a href="#maristaer">Maristaer</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" aria-label="Hero — Toledo sul Tago">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-content">
+      <p class="hero-label">PCTO · Anno scolastico 2025 / 2026</p>
+      <h1>Un anno<br>di <em>incontri</em><br>e scoperte</h1>
+      <p class="hero-sub">Due esperienze che hanno lasciato il segno: Madrid, tra storia e libertà, e Maristaer a Grottaglie, tra aviazione e professionalità.</p>
+    </div>
+    <div class="hero-scroll" aria-hidden="true">Scorri</div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <div class="intro-strip reveal">
+    <div class="stat">
+      <div class="stat-num">15</div>
+      <div class="stat-label">giorni a Madrid e dintorni</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">2</div>
+      <div class="stat-label">esperienze PCTO che non dimenticherò</div>
+    </div>
+  </div>
+
+  <!-- ══ MADRID ══ -->
+  <section id="madrid" class="section" aria-labelledby="madrid-title">
+    <div class="section-header reveal">
+      <p class="eyebrow">FSL · Madrid</p>
+      <h2 id="madrid-title">La Capitale</h2>
+    </div>
+
+    <div class="madrid-intro reveal">
+      <div>
+        <p>Madrid non è stata solo una gita scolastica — è stata una delle esperienze più significative della mia vita. Lontani dai professori per la maggior parte del tempo, abbiamo esplorato la città in autonomia, imparando a orientarci, a gestire il tempo e a prendere decisioni in gruppo.</p>
+        <p>Ho conosciuto compagni di scuola che non avevo mai frequentato prima, e con loro ho stretto legami autentici, esplorando strade nuove con la stessa curiosità con cui ci si avvicina a una persona nuova.</p>
+      </div>
+      <div class="quote-block">
+        <blockquote>«Un evento più unico che raro — non avevo mai vissuto un'esperienza bella come questa.»</blockquote>
+        <cite>Pensieri su Madrid</cite>
+      </div>
+    </div>
+
+    <!-- 3 foto Madrid -->
+    <div class="photo-grid three-col reveal">
+      <div class="photo-card" style="aspect-ratio: 2/3;">
+        <img src="img/edificio_telefonica.jpg" alt="Edificio Telefónica sulla Gran Vía" loading="lazy">
+        <div class="caption">Edificio Telefónica · Gran Vía</div>
+      </div>
+      <div class="photo-card square">
+        <img src="img/skyline_madrid.jpg" alt="Skyline di Madrid dall'alto" loading="lazy">
+        <div class="caption">Madrid dall'alto · veduta panoramica</div>
+      </div>
+      <div class="photo-card square">
+        <img src="img/edificio_seguros.jpg" alt="Edificio Seguros Ocaso sulla Gran Vía" loading="lazy">
+        <div class="caption">Seguros Ocaso · Gran Vía</div>
+      </div>
+    </div>
+
+    <!-- Posti visitati -->
+    <div class="section-header reveal" style="margin-top: 80px; margin-bottom: 0;">
+      <p class="eyebrow">I posti visitati</p>
+      <h2>Madrid da esplorare</h2>
+    </div>
+    <div class="places-grid reveal">
+      <div class="place-item">
+        <div class="place-num">01</div>
+        <div class="place-name">Gran Vía</div>
+        <div class="place-desc">Il cuore pulsante della città, tra architettura eclettica e vita urbana senza sosta.</div>
+      </div>
+      <div class="place-item">
+        <div class="place-num">02</div>
+        <div class="place-name">Puerta del Sol</div>
+        <div class="place-desc">Il punto zero della Spagna, crocevia storico e simbolo di Madrid.</div>
+      </div>
+      <div class="place-item">
+        <div class="place-num">03</div>
+        <div class="place-name">Plaza Mayor</div>
+        <div class="place-desc">La piazza barocca per eccellenza, fulcro della vita sociale madrilena.</div>
+      </div>
+      <div class="place-item">
+        <div class="place-num">04</div>
+        <div class="place-name">Parco del Retiro</div>
+        <div class="place-desc">Il polmone verde della capitale, dove abbiamo remato sul lago sotto il sole di maggio.</div>
+      </div>
+      <div class="place-item">
+        <div class="place-num">05</div>
+        <div class="place-name">Museo del Prado</div>
+        <div class="place-desc">Uno dei più grandi musei d'arte al mondo, con Goya e Velázquez a pochi passi.</div>
+      </div>
+      <div class="place-item">
+        <div class="place-num">06</div>
+        <div class="place-name">Museo di Scienze Naturali</div>
+        <div class="place-desc">Fossili, minerali e specie rare in un palazzo storico di fine Ottocento.</div>
+      </div>
+    </div>
+
+    <!-- 2 foto retiro + museo -->
+    <div class="photo-grid two-col reveal" style="margin-top: 3px;">
+      <div class="photo-card wide">
+        <img src="img/Retiro_barca.jpg" alt="Barca a remi sul lago del Parco del Retiro" loading="lazy">
+        <div class="caption">Parco del Retiro · lago</div>
+      </div>
+      <div class="photo-card wide">
+        <img src="img/museo_fossili.jpg" alt="Fossile di cetaceo al Museo di Scienze Naturali" loading="lazy">
+        <div class="caption">Museo Scienze Naturali · Neogene (Miocene)</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- TRAMONTO / INDIPENDENZA -->
+  <div class="independence reveal">
+    <div>
+      <p class="eyebrow">La sensazione d'indipendenza</p>
+      <h2>Per la prima volta,<br>davvero soli.</h2>
+      <p>Per la maggior parte del viaggio eravamo senza supervisori: liberi di scegliere dove andare, quando fermarci, cosa mangiare. Una libertà che si è rivelata anche una responsabilità — quella di organizzarsi, rispettare gli altri e fare scelte ragionate.</p>
+      <p>È stato il primo viaggio in cui ho capito davvero cosa significa essere autonomi. E l'unica guida erano i compagni con cui stavo vivendo quei giorni.</p>
+    </div>
+    <div class="independence-img">
+      <img src="img/tramonto_strada.jpg" alt="Tramonto su una strada di Madrid">
+    </div>
+  </div>
+
+  <!-- ══ TOLEDO ══ -->
+  <section id="toledo" style="background: var(--bg);">
+    <div class="section reveal">
+      <div class="section-header">
+        <p class="eyebrow">Escursione fuori Madrid</p>
+        <h2>Toledo — La città delle tre culture</h2>
+      </div>
+    </div>
+
+    <div class="toledo-feature reveal">
+      <div class="toledo-text">
+        <p class="eyebrow">Il posto preferito</p>
+        <h3>Una città che sembra uscita da un libro di storia</h3>
+        <p>Toledo è stata la tappa che mi ha colpito di più. L'antica capitale della Spagna sorge su una collina circondata dal Tago, con strade strette, torri mozarabiche e chiese gotiche che convivono in un paesaggio unico.</p>
+        <p>Camminare tra i vicoli medievali, salire sulle mura e guardare il ponte di San Martín riflesso nel fiume: sono momenti difficili da descrivere, ma facili da ricordare.</p>
+      </div>
+      <div class="toledo-imgs">
+        <div class="photo-card">
+          <img src="img/toledo_panorama.jpg" alt="Panorama di Toledo con il fiume Tago" loading="lazy">
+          <div class="caption">Vista sul Tago da Toledo</div>
+        </div>
+        <div class="photo-card">
+          <img src="img/toledo_cattedrale.jpg" alt="Monastero di San Juan de los Reyes a Toledo" loading="lazy">
+          <div class="caption">San Juan de los Reyes · Toledo</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section reveal" style="padding-top: 48px;">
+      <div class="photo-grid asymmetric">
+        <div class="photo-card tall">
+          <img src="img/toledo_torre.jpg" alt="Torre mozarabica a Toledo" loading="lazy">
+          <div class="caption">Torre mozarabica · Toledo</div>
+        </div>
+        <div class="photo-card" style="aspect-ratio: 3/4;">
+          <img src="img/toledo_ponte.jpg" alt="Ponte di San Martín e la chiesa del Cristo de la Luz" loading="lazy">
+          <div class="caption">Puente de San Martín</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FUNDACIÓN TELEFÓNICA -->
+  <div class="divider"></div>
+  <section class="section reveal" aria-labelledby="fundacion-title">
+    <div class="section-header">
+      <p class="eyebrow">Visita istituzionale · Madrid</p>
+      <h2 id="fundacion-title">La Fundación Telefónica</h2>
+    </div>
+    <div class="madrid-intro">
+      <div>
+        <p>Uno degli incontri più interessanti organizzati dalla scuola è stato quello alla Fundación Telefónica, sul Paseo de Recoletos. Non un museo tradizionale, ma uno spazio aperto alla comunità dove tecnologia, arte e creatività si incontrano.</p>
+        <p>All'interno abbiamo potuto esplorare esposizioni interattive sulla storia delle telecomunicazioni e sulla trasformazione digitale, attraverso installazioni che mescolano passato e futuro in modo sorprendente.</p>
+      </div>
+      <div>
+        <p>Ciò che mi ha colpito di più è la filosofia dello spazio: chiunque può entrarvi per lavorare, studiare o semplicemente incontrarsi. Un posto pensato per abbattere le barriere tra azienda e cittadini, tra tecnologia e cultura.</p>
+        <p>È stata un'occasione per riflettere su come le grandi aziende possano restituire qualcosa alle città in cui operano.</p>
+      </div>
+    </div>
+    <!-- Museo auto come immagine Fundación -->
+    <div class="fundacion-row">
+      <div class="photo-card">
+        <img src="img/museo_auto.jpg" alt="Auto d'epoca alla Fundación Telefónica" loading="lazy">
+        <div class="caption">Fundación Telefónica · esposizione storica</div>
+      </div>
+      <div class="photo-card">
+        <img src="img/statua_sancho.jpg" alt="Statua di Don Sancho IV al Parco del Retiro" loading="lazy">
+        <div class="caption">D. Sancho IV · Parco del Retiro</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ MARISTAER ══ -->
+  <div class="divider"></div>
+  <section id="maristaer" class="maristaer-section" aria-labelledby="maristaer-title">
+    <div class="section">
+      <div class="section-header reveal">
+        <p class="eyebrow navy">PCTO · Stazione Aeromobili della Marina</p>
+        <h2 id="maristaer-title">Maristaer,<br>Grottaglie</h2>
+      </div>
+
+      <div class="maristaer-intro reveal">
+        <div>
+          <p>La seconda grande esperienza dell'anno è stata la settimana trascorsa alla Stazione Aeromobili della Marina Militare a Grottaglie, nel cuore della Puglia — una base operativa a pochi chilometri da casa.</p>
+          <p>Per cinque giorni abbiamo avuto accesso a un ambiente normalmente inaccessibile al pubblico, scoprendo un mondo fatto di rigore, precisione e competenze altamente specializzate.</p>
+        </div>
+        <div>
+          <p>Militari, guardie, aviatori e tecnici della manutenzione ci hanno accolto con professionalità, spiegandoci nel dettaglio le loro mansioni e mostrandoci le diverse sezioni della base, ognuna con un ruolo specifico nell'operatività dell'intera struttura.</p>
+          <p>È stata un'esperienza che ha cambiato la mia percezione di questo settore: sotto l'uniforme, ho visto persone con un mestiere appassionante e una responsabilità enorme.</p>
+        </div>
+      </div>
+
+      <div class="info-cards reveal">
+        <div class="info-card">
+          <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          <h4>Manutenzione Aeromobili</h4>
+          <p>Ogni velivolo segue un ciclo rigoroso di ispezioni e interventi tecnici. Abbiamo visto da vicino come si gestisce la manutenzione programmata e straordinaria degli elicotteri della Marina.</p>
+        </div>
+        <div class="info-card">
+          <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
+          </svg>
+          <h4>Efficienza Operativa</h4>
+          <p>Una base militare funziona come un sistema complesso: ogni reparto è interdipendente dagli altri. La coordinazione tra personale, logistica e mezzi è ciò che garantisce la continuità delle operazioni.</p>
+        </div>
+        <div class="info-card">
+          <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+          </svg>
+          <h4>Sicurezza di Rete</h4>
+          <p>Oltre alla sicurezza fisica, la base presidia sistemi informatici critici. Proteggere i dati operativi da minacce cyber è oggi priorità tanto quanto la difesa perimetrale.</p>
+        </div>
+        <div class="info-card">
+          <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          <h4>Interazione con i Professionisti</h4>
+          <p>Il momento più formativo è stato il dialogo diretto con chi lavora in quella base ogni giorno: storie di carriera, scelte di vita e competenze costruite negli anni.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CONCLUSIONE ══ -->
+  <div class="divider"></div>
+  <section class="final reveal" aria-labelledby="final-title">
+    <p class="eyebrow">Pensieri finali</p>
+    <h2 id="final-title">Due esperienze.<br><em>Un anno che conta.</em></h2>
+    <p>Le esperienze PCTO di quest'anno non mi hanno solo avvicinato al mondo del lavoro — mi hanno aiutato a capire chi sono quando sono lontano da casa, quando devo arrangiarmi, quando scopro qualcosa di nuovo per la prima volta. Questo, più di qualsiasi nozione appresa in classe, è ciò che porterò con me.</p>
+    <div class="final-divider" aria-hidden="true"></div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>FSL 2025/2026 — PCTO</p>
+    <p>Sito di Simone Santarcangelo</p>
+  </footer>
+
+  <script>
+    // Reveal on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Stagger children in grids
+    document.querySelectorAll('.places-grid, .info-cards').forEach(grid => {
+      grid.querySelectorAll(':scope > *').forEach((child, i) => {
+        child.style.transitionDelay = `${i * 80}ms`;
+      });
+    });
+  </script>
+</body>
+</html>
